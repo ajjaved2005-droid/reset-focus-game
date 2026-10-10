@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE:SET — What's Your Mindset Today?</title>
+<link rel="icon" href="logo.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy: #152B4A;
+  --navy-light: #1E3A5F;
+  --teal: #2ECDA6;
+  --teal-dark: #24A888;
+  --orange: #E87830;
+  --yellow: #FFCA28;
+  --blue: #2196F3;
+  --green: #00C853;
+  --red: #e53935;
+  --bg: #FFFFFF;
+  --white: #FFFFFF;
+  --text-primary: #152B4A;
+  --text-secondary: rgba(21,43,74,0.5);
+  --border-light: rgba(21,43,74,0.1);
+  --border-med: rgba(21,43,74,0.16);
+  --shadow-sm: 0 1px 3px rgba(21,43,74,0.06), 0 1px 2px rgba(21,43,74,0.04);
+  --shadow-md: 0 4px 16px rgba(21,43,74,0.08), 0 2px 6px rgba(21,43,74,0.04);
+  --shadow-lg: 0 12px 40px rgba(21,43,74,0.1), 0 4px 12px rgba(21,43,74,0.06);
+  --shadow-teal: 0 4px 20px rgba(46,205,166,0.25);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter','Space Grotesk',sans-serif;
+  background: #fff;
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Cpath d='M4,2 L4,24 L9,19 L14,28 L18,26 L13,17 L22,17 Z' fill='%23FFCA28' stroke='%23152B4A' stroke-width='2' stroke-linejoin='miter'/%3E%3C/svg%3E") 4 2, auto;
+}
+a, button, .char-card, [onclick] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Cpath d='M4,2 L4,24 L9,19 L14,28 L18,26 L13,17 L22,17 Z' fill='%23FFCA28' stroke='%23152B4A' stroke-width='2.5' stroke-linejoin='miter'/%3E%3C/svg%3E") 4 2, pointer;
+}
+
+/* ===== GRID BACKGROUND ===== */
+.grid-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg width='70' height='70' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='70' height='70' fill='none'/%3E%3Cline x1='70' y1='0' x2='70' y2='70' stroke='rgba(33,150,243,0.18)' stroke-width='1'/%3E%3Cline x1='0' y1='70' x2='70' y2='70' stroke='rgba(33,150,243,0.18)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 70px 70px;
+}
+
+/* ===== PIXEL DECOR ===== */
+.pixel-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.pix { position: absolute; border-radius: 1px; opacity: 0; animation: pixFloat 20s ease-in-out infinite; }
+@keyframes pixFloat {
+  0%,100% { opacity:0; transform:translateY(0) rotate(0deg); }
+  15% { opacity:.45; } 50% { opacity:.35; transform:translateY(-30px) rotate(45deg); } 85% { opacity:.45; }
+}
+
+/* ===== SCREENS ===== */
+.screen { display:none; flex-direction:column; align-items:center; min-height:100vh; width:100%; position:relative; z-index:1; }
+.screen.active { display:flex; }
+.screen.fade-in { animation: screenIn .6s ease forwards; }
+@keyframes screenIn { from{opacity:0} to{opacity:1} }
+
+/* ===== ANIM HELPERS ===== */
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+/* ===== TRANSITION OVERLAY ===== */
+.transition-overlay { position:fixed;inset:0;z-index:100;background:#fff;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s ease; }
+.transition-overlay.active { opacity:1;pointer-events:all; }
+.t-spinner { width:40px;height:40px;border:3px solid var(--border-light);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* ===== WELCOME SCREEN ===== */
+#welcome-screen { justify-content:center;align-items:center;padding:40px 24px;text-align:center; }
+.welcome-container { display:flex;flex-direction:column;align-items:center;max-width:560px; }
+.welcome-logo { margin-bottom:40px;animation:wlEnter 1s cubic-bezier(.22,1,.36,1) forwards; }
+.welcome-logo img { height:clamp(100px,20vw,160px);width:auto;filter:drop-shadow(0 4px 12px rgba(21,43,74,.08)); }
+@keyframes wlEnter { from{opacity:0;transform:scale(.85) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.welcome-title { font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:700;letter-spacing:3px;color:var(--navy);margin-bottom:14px;animation:fadeUp .7s ease .3s both; }
+.welcome-subtitle { font-size:clamp(.95rem,2vw,1.1rem);color:var(--text-secondary);line-height:1.7;margin-bottom:48px;animation:fadeUp .7s ease .5s both; }
+.btn-enter { display:inline-flex;align-items:center;padding:16px 52px;font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;background:var(--navy);border:2px solid var(--navy);border-radius:6px;transition:all .3s ease;animation:fadeUp .7s ease .7s both; }
+.btn-enter:hover { background:transparent;color:var(--navy);box-shadow:var(--shadow-md); }
+.btn-enter:active { transform:scale(.97); }
+.corner-decor { position:absolute;z-index:0;opacity:.12; }
+.corner-decor.tl{top:30px;left:30px} .corner-decor.tr{top:30px;right:30px}
+.corner-decor.bl{bottom:30px;left:30px} .corner-decor.br{bottom:30px;right:30px}
+
+/* ===== SELECTION SCREEN ===== */
+#selection-screen { padding-bottom:60px; }
+.sel-header { text-align:center;padding:40px 20px 8px;animation:fadeUp .6s ease forwards; }
+.sel-logo { margin-bottom:8px; }
+.sel-logo img { height:90px;width:auto;filter:drop-shadow(0 2px 8px rgba(21,43,74,.06));transition:transform .3s ease; }
+.sel-logo:hover img { transform:scale(1.04); }
+.sel-tagline { font-family:'Space Grotesk',sans-serif;font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:700;letter-spacing:2px;color:var(--navy);margin-bottom:8px;animation:fadeUp .6s ease .15s both; }
+.sel-subtitle { font-size:clamp(.9rem,1.8vw,1rem);color:var(--text-secondary);letter-spacing:.5px;animation:fadeUp .6s ease .25s both; }
+.divider { width:50px;height:3px;background:var(--teal);margin:20px auto 0;border-radius:2px;animation:fadeUp .6s ease .35s both; }
+.characters-section { width:100%;max-width:1100px;padding:28px 24px 20px;margin:0 auto;animation:fadeUp .6s ease .4s both; }
+.characters-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:22px; }
+.char-card { position:relative;background:#fff;border:2px solid var(--border-light);border-radius:14px;padding:28px 14px 22px;display:flex;flex-direction:column;align-items:center;transition:all .35s cubic-bezier(.25,.8,.25,1);box-shadow:var(--shadow-sm); }
+.char-card:hover { transform:translateY(-8px);border-color:var(--teal);box-shadow:var(--shadow-lg),0 0 0 1px var(--teal); }
+.char-card.selected { transform:translateY(-8px);border-color:var(--navy);box-shadow:var(--shadow-lg),0 0 0 2px var(--navy); }
+.char-select-arrow { position:absolute;top:12px;right:12px;width:26px;height:30px;opacity:0;transform:scale(.5) rotate(-10deg);transition:all .35s cubic-bezier(.34,1.56,.64,1);z-index:3;filter:drop-shadow(0 2px 4px rgba(21,43,74,.15)); }
+.char-card.selected .char-select-arrow { opacity:1;transform:scale(1) rotate(0deg); }
+.char-top-accent { position:absolute;top:0;left:50%;transform:translateX(-50%);width:0;height:3px;border-radius:0 0 3px 3px;transition:width .4s ease; }
+.char-card:hover .char-top-accent,.char-card.selected .char-top-accent { width:60%; }
+.char-img-wrap { position:relative;width:100%;height:210px;display:flex;align-items:center;justify-content:center;margin-bottom:14px; }
+.char-img-wrap img { max-height:195px;max-width:100%;width:auto;object-fit:contain;image-rendering:auto;transition:transform .4s cubic-bezier(.25,.8,.25,1);filter:drop-shadow(0 4px 12px rgba(21,43,74,.1)); }
+.char-card:hover .char-img-wrap img,.char-card.selected .char-img-wrap img { transform:scale(1.06) translateY(-4px); }
+.char-name { font-family:'Space Grotesk',sans-serif;font-size:clamp(.78rem,1.3vw,.95rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;color:var(--navy);transition:color .3s ease; }
+.char-card:hover .char-name { color:var(--teal-dark); }
+.char-underline { width:24px;height:2px;margin-top:10px;border-radius:2px;transition:width .4s ease; }
+.char-card:hover .char-underline,.char-card.selected .char-underline { width:40px; }
+.selection-panel { width:100%;max-width:680px;margin:0 auto;padding:0 24px 20px;opacity:0;transform:translateY(24px);transition:all .45s cubic-bezier(.25,.8,.25,1);pointer-events:none; }
+.selection-panel.visible { opacity:1;transform:translateY(0);pointer-events:all; }
+.sel-inner { background:#fff;border:2px solid var(--border-med);border-radius:14px;padding:32px 36px;display:flex;align-items:center;gap:28px;box-shadow:var(--shadow-md);position:relative; }
+.sel-char-img { flex-shrink:0; }
+.sel-char-img img { height:130px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(21,43,74,.1));animation:selBounce .45s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes selBounce { from{opacity:0;transform:scale(.7) translateY(16px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.sel-info { flex:1; }
+.sel-name { font-family:'Space Grotesk',sans-serif;font-size:clamp(1.1rem,2.2vw,1.45rem);font-weight:700;letter-spacing:2px;color:var(--navy);margin-bottom:8px; }
+.sel-desc { font-size:clamp(.85rem,1.5vw,.92rem);color:var(--text-secondary);line-height:1.65;margin-bottom:20px; }
+.btn-start { display:inline-flex;align-items:center;gap:12px;padding:13px 32px;font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#fff;background:var(--teal);border:2px solid var(--teal);border-radius:6px;transition:all .3s ease; }
+.btn-start:hover { background:var(--teal-dark);border-color:var(--teal-dark);box-shadow:var(--shadow-teal); }
+.btn-start:active { transform:scale(.97); }
+.btn-start .arrow { display:inline-block;transition:transform .3s ease;font-size:1.1rem; }
+.btn-start:hover .arrow { transform:translateX(4px); }
+
+/* ===== COMING SOON ===== */
+#coming-soon-screen { justify-content:center;align-items:center;padding:40px 24px;text-align:center; }
+.cs-container { max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center; }
+.cs-char-img { margin-bottom:36px;animation:csIn .7s cubic-bezier(.34,1.56,.64,1) .3s both; }
+.cs-char-img img { height:clamp(150px,28vw,220px);width:auto;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(21,43,74,.12)); }
+@keyframes csIn { from{opacity:0;transform:scale(.6) translateY(30px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.cs-badge { display:inline-flex;align-items:center;gap:10px;padding:8px 20px;border-radius:50px;background:#fff;border:1.5px solid var(--border-light);margin-bottom:24px;box-shadow:var(--shadow-sm);animation:fadeUp .5s ease .5s both; }
+.cs-dot { width:8px;height:8px;border-radius:50%;background:var(--teal);animation:dotP 1.5s ease infinite; }
+@keyframes dotP { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(46,205,166,.4)} 50%{opacity:.5;box-shadow:0 0 0 6px rgba(46,205,166,0)} }
+.cs-badge-text { font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--navy); }
+.cs-title { font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:700;letter-spacing:4px;color:var(--navy);margin-bottom:14px;animation:fadeUp .6s ease .7s both; }
+.cs-subtitle { font-size:clamp(.92rem,2vw,1.05rem);color:var(--text-secondary);line-height:1.7;max-width:400px;margin-bottom:36px;animation:fadeUp .6s ease .9s both; }
+.cs-progress-wrap { width:100%;max-width:300px;margin-bottom:36px;animation:fadeUp .6s ease 1s both; }
+.cs-progress-track { width:100%;height:4px;border-radius:4px;background:var(--border-light);overflow:hidden; }
+.cs-progress-bar { height:100%;width:0%;border-radius:4px;background:var(--teal);animation:pFill 2.5s ease 1.3s forwards; }
+@keyframes pFill { 0%{width:0%} 60%{width:72%} 80%{width:80%} 100%{width:88%} }
+.btn-back { display:inline-flex;align-items:center;gap:10px;padding:12px 28px;font-family:'Space Grotesk',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-secondary);background:#fff;border:1.5px solid var(--border-light);border-radius:6px;transition:all .3s ease;animation:fadeUp .6s ease 1.1s both; }
+.btn-back:hover { color:var(--navy);border-color:var(--navy);box-shadow:var(--shadow-sm); }
+.btn-back .arrow-back { transition:transform .3s ease; }
+.btn-back:hover .arrow-back { transform:translateX(-4px); }
+
+/* ===================================================
+   GAME SCREENS
+   =================================================== */
+
+/* Shared game buttons */
+.gbtn { display:inline-flex;align-items:center;gap:10px;padding:13px 32px;font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border-radius:6px;border:2px solid transparent;transition:all .28s ease; }
+.gbtn:active { transform:scale(.97); }
+.gbtn-navy { background:var(--navy);color:#fff;border-color:var(--navy); }
+.gbtn-navy:hover { background:transparent;color:var(--navy); }
+.gbtn-teal { background:var(--teal);color:var(--navy);border-color:var(--teal); }
+.gbtn-teal:hover { background:var(--teal-dark);border-color:var(--teal-dark);box-shadow:var(--shadow-teal); }
+.gbtn-outline { background:transparent;color:var(--navy);border-color:var(--border-med); }
+.gbtn-outline:hover { border-color:var(--navy);box-shadow:var(--shadow-sm); }
+
+/* ===== INSTRUCTIONS SCREEN ===== */
+#game-instructions-screen { justify-content:center;align-items:center;padding:28px 20px;min-height:100vh; }
+.instr-wrap { width:100%;max-width:680px;background:#fff;border:2px solid var(--border-med);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;animation:fadeUp .6s ease both; }
+.instr-header { background:var(--navy);padding:28px 36px;display:flex;align-items:center;gap:24px; }
+.instr-char img { height:100px;width:auto;object-fit:contain;filter:drop-shadow(0 4px 16px rgba(0,0,0,.25)); }
+.instr-title-block { flex:1; }
+.instr-tag { font-family:'Space Grotesk',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:5px; }
+.instr-title { font-family:'Space Grotesk',sans-serif;font-size:clamp(1.7rem,4vw,2.4rem);font-weight:700;letter-spacing:3px;color:#fff;margin-bottom:6px; }
+.instr-hook { font-size:.92rem;color:rgba(255,255,255,.5);font-style:italic; }
+.instr-body { padding:28px 36px 32px; }
+.instr-desc { font-size:.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;border-left:3px solid var(--teal);padding-left:14px; }
+.instr-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px; }
+.instr-card { background:#f8f9fb;border:1.5px solid var(--border-light);border-radius:10px;padding:14px 16px; }
+.instr-card-label { font-family:'Space Grotesk',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-secondary);margin-bottom:5px; }
+.instr-card-value { font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:700;color:var(--navy); }
+.instr-levels { display:flex;gap:10px;margin-bottom:28px; }
+.instr-lvl { flex:1;padding:12px 10px;border-radius:8px;text-align:center;border:1.5px solid var(--border-light); }
+.instr-lvl-num { font-family:'Space Grotesk',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px; }
+.instr-lvl-name { font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:700;color:var(--navy); }
+.instr-actions { display:flex;justify-content:flex-end;align-items:center;gap:12px; }
+
+/* ===== GAME SCREEN ===== */
+#game-screen { flex-direction:column;align-items:center;padding:0;min-height:100vh;background:#fff;justify-content:flex-start; }
+.game-topbar { width:100%;background:#fff;border-bottom:2px solid var(--border-light);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;flex-shrink:0; }
+.gtb-logo img { height:34px;width:auto; }
+.gtb-badge { font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;background:var(--navy);padding:5px 14px;border-radius:4px; }
+.gtb-right { display:flex;align-items:center;gap:18px; }
+.hud-timer { display:flex;align-items:center;gap:7px; }
+.hud-t-lbl { font-family:'Space Grotesk',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-secondary); }
+.hud-t-val { font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:700;color:var(--navy);min-width:42px;text-align:right;transition:color .3s ease; }
+.hud-t-val.danger { color:var(--red);animation:tPulse .5s ease infinite alternate; }
+@keyframes tPulse { from{opacity:1} to{opacity:.45} }
+.hud-meter { display:flex;align-items:center;gap:7px; }
+.hud-m-lbl { font-family:'Space Grotesk',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-secondary); }
+.hud-m-track { width:90px;height:7px;border-radius:4px;background:var(--border-light);overflow:hidden; }
+.hud-m-fill { height:100%;width:0%;border-radius:4px;background:var(--teal);transition:width .4s ease,background .4s ease; }
+.hud-m-fill.warn { background:var(--orange); }
+.hud-m-fill.crit { background:var(--red); }
+.hud-m-pct { font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:700;color:var(--navy);min-width:32px; }
+.game-canvas-wrap { flex:1;display:flex;align-items:center;justify-content:center;padding:14px;width:100%; }
+#game-canvas { display:block;background:#fff;border:2px solid var(--border-light);border-radius:4px;box-shadow:var(--shadow-md); }
+
+/* Flash overlay */
+.game-flash { position:fixed;inset:0;z-index:50;pointer-events:none;opacity:0;transition:opacity .15s ease; }
+.game-flash.show { opacity:1; }
+
+/* Toast */
+#penalty-toast { position:fixed;top:68px;left:50%;transform:translateX(-50%) translateY(-16px);background:var(--navy);color:#fff;padding:9px 20px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:1.5px;white-space:nowrap;z-index:60;opacity:0;pointer-events:none;transition:all .3s ease;box-shadow:var(--shadow-md); }
+#penalty-toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+#penalty-toast.warn { background:var(--orange); }
+#penalty-toast.danger { background:var(--red); }
+
+/* Mobile D-pad */
+.mobile-controls { display:none;padding:10px 0 18px;flex-direction:column;align-items:center;gap:3px;flex-shrink:0; }
+.dpad-row { display:flex;gap:3px; }
+.dpad-btn { width:52px;height:52px;border-radius:8px;background:#fff;border:2px solid var(--border-med);font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);transition:all .15s ease;-webkit-tap-highlight-color:transparent;user-select:none; }
+.dpad-btn:active { background:var(--navy);color:#fff;transform:scale(.92); }
+.dpad-spacer { width:52px;height:52px; }
+@media (hover:none) and (pointer:coarse) { .mobile-controls{display:flex} }
+@media (max-width:500px) { .mobile-controls{display:flex} .game-canvas-wrap{padding:8px} .gtb-badge{font-size:.65rem;padding:4px 10px} .hud-m-track{width:62px} .hud-t-val{font-size:1.1rem} }
+
+/* ===== LEVEL COMPLETE ===== */
+#level-complete-screen { justify-content:center;align-items:center;padding:40px 24px;text-align:center; }
+.lc-wrap { width:100%;max-width:500px;background:#fff;border:2px solid var(--border-med);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;animation:fadeUp .5s ease both; }
+.lc-head { background:var(--navy);padding:24px 36px;display:flex;align-items:center;justify-content:center;gap:14px; }
+.lc-check { width:44px;height:44px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0; }
+.lc-title { font-family:'Space Grotesk',sans-serif;font-size:clamp(1.3rem,3.5vw,1.8rem);font-weight:700;letter-spacing:3px;color:#fff; }
+.lc-body { padding:24px 36px 28px; }
+.lc-stats { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px; }
+.lc-stat { background:#f8f9fb;border:1.5px solid var(--border-light);border-radius:10px;padding:12px 14px;text-align:left; }
+.lc-stat-lbl { font-family:'Space Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-secondary);margin-bottom:3px; }
+.lc-stat-val { font-family:'Space Grotesk',sans-serif;font-size:1.15rem;font-weight:700;color:var(--navy); }
+.lc-score-row { background:var(--navy);border-radius:10px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px; }
+.lc-score-lbl { font-family:'Space Grotesk',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal); }
+.lc-score-val { font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:#fff; }
+.lc-actions { display:flex;justify-content:flex-end;gap:10px; }
+
+/* ===== GAME OVER ===== */
+#game-over-screen { justify-content:center;align-items:center;padding:40px 24px;text-align:center; }
+.go-wrap { width:100%;max-width:460px;background:#fff;border:2px solid var(--border-med);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;animation:fadeUp .5s ease both; }
+.go-head { background:#1a1a2e;padding:30px 36px; }
+.go-icon { font-size:2.4rem;margin-bottom:10px; }
+.go-title { font-family:'Space Grotesk',sans-serif;font-size:clamp(1.4rem,3.5vw,2rem);font-weight:700;letter-spacing:3px;color:#fff;margin-bottom:7px; }
+.go-sub { font-size:.88rem;color:rgba(255,255,255,.42);line-height:1.6; }
+.go-body { padding:24px 36px 28px; }
+.go-m-lbl { font-family:'Space Grotesk',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-secondary);margin-bottom:7px; }
+.go-m-bar { width:100%;height:7px;border-radius:4px;background:var(--border-light);overflow:hidden;margin-bottom:22px; }
+.go-m-fill { height:100%;border-radius:4px;background:var(--red);transition:width .8s cubic-bezier(.25,.8,.25,1); }
+.go-actions { display:flex;flex-direction:column;gap:9px; }
+
+/* ===== FINAL SCORE ===== */
+#final-score-screen { justify-content:center;align-items:center;padding:40px 24px;text-align:center; }
+.fs-wrap { width:100%;max-width:540px;background:#fff;border:2px solid var(--border-med);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;animation:fadeUp .5s ease both; }
+.fs-head { background:var(--navy);padding:28px 36px;display:flex;flex-direction:column;align-items:center; }
+.fs-logo img { height:64px;width:auto;margin-bottom:18px;filter:drop-shadow(0 2px 10px rgba(21,43,74,0.2)) drop-shadow(0 0 20px rgba(33,150,243,0.25)); }
+.fs-super { font-family:'Space Grotesk',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:5px; }
+.fs-title { font-family:'Space Grotesk',sans-serif;font-size:clamp(1.3rem,3.5vw,1.9rem);font-weight:700;letter-spacing:3px;color:#fff; }
+.fs-body { padding:28px 36px 32px; }
+.fs-char-img { margin-bottom:16px; }
+.fs-char-img img { height:140px;width:auto;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(21,43,74,.12)); }
+.fs-score-box { margin-bottom:20px;padding:20px;background:#f8f9fb;border:1.5px solid var(--border-light);border-radius:12px; }
+.fs-score-lbl { font-family:'Space Grotesk',sans-serif;font-size:.63rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--text-secondary);margin-bottom:6px; }
+.fs-score-num { font-family:'Space Grotesk',sans-serif;font-size:clamp(2.8rem,7vw,4rem);font-weight:700;color:var(--navy);line-height:1; }
+.fs-score-out { font-size:1.1rem;color:var(--text-secondary);font-weight:500; }
+.fs-message { font-size:.95rem;color:var(--text-secondary);line-height:1.7;margin-bottom:22px;font-style:italic;border-left:3px solid var(--teal);padding-left:14px;text-align:left; }
+.fs-breakdown { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px; }
+.fs-stat { background:#f8f9fb;border:1.5px solid var(--border-light);border-radius:8px;padding:10px 6px;text-align:center; }
+.fs-stat-val { font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:var(--navy); }
+.fs-stat-lbl { font-size:.6rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);margin-top:2px; }
+.fs-actions { display:flex;gap:10px;justify-content:center;flex-wrap:wrap; }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){.characters-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+@media(max-width:640px){
+  .sel-header{padding:30px 16px 6px} .sel-logo img{height:50px}
+  .characters-section{padding:20px 14px 16px} .characters-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .char-card{padding:18px 8px 16px;border-radius:12px} .char-img-wrap{height:130px;margin-bottom:10px}
+  .char-img-wrap img{max-height:120px} .char-name{font-size:.68rem;letter-spacing:1.2px}
+  .char-underline{width:18px;height:2px;margin-top:7px} .char-select-arrow{width:20px;height:24px;top:8px;right:8px}
+  .selection-panel{padding:0 14px 32px}
+  .sel-inner{flex-direction:column;padding:24px 20px;text-align:center;gap:14px}
+  .sel-char-img img{height:100px} .btn-start{width:100%;justify-content:center}
+  .welcome-logo img{height:90px} .btn-enter{padding:14px 36px;font-size:.9rem}
+  .corner-decor{display:none}
+  .instr-header{flex-direction:column;text-align:center;padding:22px 22px;gap:14px}
+  .instr-body{padding:22px} .instr-grid{grid-template-columns:1fr} .instr-levels{flex-direction:column;gap:8px}
+  .instr-actions{flex-direction:column} .instr-actions .gbtn{width:100%;justify-content:center}
+  .lc-stats{grid-template-columns:1fr} .lc-body{padding:18px 22px 22px} .lc-head{padding:18px 22px}
+  .go-body{padding:18px 22px 22px} .fs-body{padding:22px} .fs-actions{flex-direction:column}
+  .fs-actions .gbtn{width:100%;justify-content:center}
+}
+@media(max-width:380px){
+  .characters-grid{gap:8px} .char-card{padding:12px 6px 12px}
+  .char-img-wrap{height:100px} .char-img-wrap img{max-height:95px} .char-name{font-size:.6rem}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="pixel-decor" id="pixel-decor"></div>
+<div class="transition-overlay" id="transition-overlay"><div class="t-spinner"></div></div>
+<div id="penalty-toast"></div>
+<div class="game-flash" id="game-flash"></div>
+
+<!-- ======== WELCOME ======== -->
+<div class="screen active fade-in" id="welcome-screen">
+  <div class="corner-decor tl"><svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect x="0" y="0" width="8" height="8" fill="#152B4A" opacity=".5"/><rect x="12" y="0" width="6" height="6" fill="#2ECDA6" opacity=".5"/><rect x="0" y="12" width="6" height="6" fill="#2196F3" opacity=".4"/><rect x="22" y="8" width="4" height="4" fill="#FFCA28" opacity=".5"/></svg></div>
+  <div class="corner-decor tr"><svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect x="52" y="0" width="8" height="8" fill="#E87830" opacity=".4"/><rect x="42" y="4" width="6" height="6" fill="#2ECDA6" opacity=".4"/><rect x="52" y="14" width="5" height="5" fill="#152B4A" opacity=".3"/><rect x="36" y="12" width="4" height="4" fill="#FFCA28" opacity=".4"/></svg></div>
+  <div class="corner-decor bl"><svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect x="0" y="52" width="8" height="8" fill="#2196F3" opacity=".4"/><rect x="12" y="50" width="5" height="5" fill="#FFCA28" opacity=".4"/><rect x="0" y="40" width="6" height="6" fill="#2ECDA6" opacity=".35"/></svg></div>
+  <div class="corner-decor br"><svg width="60" height="60" viewBox="0 0 60 60" fill="none"><rect x="48" y="52" width="8" height="8" fill="#152B4A" opacity=".4"/><rect x="38" y="54" width="6" height="6" fill="#E87830" opacity=".35"/><rect x="50" y="42" width="5" height="5" fill="#2ECDA6" opacity=".4"/></svg></div>
+  <div class="welcome-container">
+    <div class="welcome-logo"><img src="logo.png" alt="RE:SET Logo"></div>
+    <h1 class="welcome-title">WELCOME TO RE:SET</h1>
+    <p class="welcome-subtitle">Reset your attention. Challenge your mindset.</p>
+    <button class="btn-enter" onclick="enterGame()">ENTER</button>
+  </div>
+</div>
+
+<!-- ======== SELECTION ======== -->
+<div class="screen" id="selection-screen">
+  <header class="sel-header">
+    <div class="sel-logo"><img src="logo.png" alt="RE:SET"></div>
+    <h1 class="sel-tagline">WHAT'S YOUR MINDSET TODAY?</h1>
+    <p class="sel-subtitle">Choose the mindset you want to challenge.</p>
+    <div class="divider"></div>
+  </header>
+  <section class="characters-section">
+    <div class="characters-grid">
+      <div class="char-card" data-char="overthinker" onclick="selectCharacter(this)">
+        <svg class="char-select-arrow" viewBox="0 0 24 28" fill="none"><path d="M3 1L3 21L8 16L13 25L17 23L12 14L21 14Z" fill="#FFCA28" stroke="#152B4A" stroke-width="1.8" stroke-linejoin="miter"/></svg>
+        <div class="char-top-accent" style="background:#2196F3"></div>
+        <div class="char-img-wrap"><img src="overthinker.png" alt="The Overthinker"></div>
+        <span class="char-name">The Overthinker</span>
+        <div class="char-underline" style="background:#2196F3"></div>
+      </div>
+      <div class="char-card" data-char="procrastinator" onclick="selectCharacter(this)">
+        <svg class="char-select-arrow" viewBox="0 0 24 28" fill="none"><path d="M3 1L3 21L8 16L13 25L17 23L12 14L21 14Z" fill="#FFCA28" stroke="#152B4A" stroke-width="1.8" stroke-linejoin="miter"/></svg>
+        <div class="char-top-accent" style="background:#E87830"></div>
+        <div class="char-img-wrap"><img src="procrastinator.png" alt="The Procrastinator"></div>
+        <span class="char-name">The Procrastinator</span>
+        <div class="char-underline" style="background:#E87830"></div>
+      </div>
+      <div class="char-card" data-char="distracted" onclick="selectCharacter(this)">
+        <svg class="char-select-arrow" viewBox="0 0 24 28" fill="none"><path d="M3 1L3 21L8 16L13 25L17 23L12 14L21 14Z" fill="#FFCA28" stroke="#152B4A" stroke-width="1.8" stroke-linejoin="miter"/></svg>
+        <div class="char-top-accent" style="background:#2ECDA6"></div>
+        <div class="char-img-wrap"><img src="distracted.png" alt="The Distracted"></div>
+        <span class="char-name">The Distracted</span>
+        <div class="char-underline" style="background:#2ECDA6"></div>
+      </div>
+      <div class="char-card" data-char="focused" onclick="selectCharacter(this)">
+        <svg class="char-select-arrow" viewBox="0 0 24 28" fill="none"><path d="M3 1L3 21L8 16L13 25L17 23L12 14L21 14Z" fill="#FFCA28" stroke="#152B4A" stroke-width="1.8" stroke-linejoin="miter"/></svg>
+        <div class="char-top-accent" style="background:#00C853"></div>
+        <div class="char-img-wrap"><img src="focused.png" alt="The Focused One"></div>
+        <span class="char-name">The Focused One</span>
+        <div class="char-underline" style="background:#00C853"></div>
+      </div>
+    </div>
+  </section>
+  <div class="selection-panel" id="selection-panel">
+    <div class="sel-inner">
+      <div class="sel-char-img"><img id="sel-img" src="" alt=""></div>
+      <div class="sel-info">
+        <div class="sel-name" id="sel-name"></div>
+        <div class="sel-desc" id="sel-desc"></div>
+        <button class="btn-start" onclick="startChallenge()">START CHALLENGE <span class="arrow">→</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== COMING SOON ======== -->
+<div class="screen" id="coming-soon-screen">
+  <div class="cs-container">
+    <div class="cs-char-img"><img id="cs-char-img" src="" alt=""></div>
+    <div class="cs-badge"><div class="cs-dot"></div><span class="cs-badge-text">Challenge Initializing...</span></div>
+    <h2 class="cs-title">COMING SOON</h2>
+    <p class="cs-subtitle">Your challenge is being prepared. Get ready to RE:SET your mindset.</p>
+    <div class="cs-progress-wrap"><div class="cs-progress-track"><div class="cs-progress-bar"></div></div></div>
+    <button class="btn-back" onclick="goBack()"><span class="arrow-back">←</span> Back to Selection</button>
+  </div>
+</div>
+
+<!-- ======== GAME INSTRUCTIONS ======== -->
+<div class="screen" id="game-instructions-screen">
+  <div class="instr-wrap">
+    <div class="instr-header">
+      <div class="instr-char"><img src="overthinker.png" alt="The Overthinker"></div>
+      <div class="instr-title-block">
+        <div class="instr-tag">The Overthinker Challenge</div>
+        <h1 class="instr-title">ESCAPE THE LOOP</h1>
+        <p class="instr-hook">"You have 30 seconds to escape."</p>
+      </div>
+    </div>
+    <div class="instr-body">
+      <p class="instr-desc">The maze is designed to make you doubt every decision. Navigate through branching paths, avoid traps and enemies, and reach the EXIT before overthinking takes control. Wrong choices fill the Overthinking Meter — fill it completely and you lose focus.</p>
+      <div class="instr-grid">
+        <div class="instr-card"><div class="instr-card-label">Controls</div><div class="instr-card-value">WASD / Arrow Keys</div></div>
+        <div class="instr-card"><div class="instr-card-label">Goal</div><div class="instr-card-value">Reach EXIT before time runs out</div></div>
+        <div class="instr-card"><div class="instr-card-label">Avoid</div><div class="instr-card-value">Traps · Enemies · False Exits</div></div>
+        <div class="instr-card"><div class="instr-card-label">Warning</div><div class="instr-card-value">Maze changes every retry</div></div>
+      </div>
+      <div class="instr-levels">
+        <div class="instr-lvl" style="border-color:#2ECDA6"><div class="instr-lvl-num" style="color:#2ECDA6">LEVEL 1</div><div class="instr-lvl-name">EASY — Confusion</div></div>
+        <div class="instr-lvl" style="border-color:#E87830"><div class="instr-lvl-num" style="color:#E87830">LEVEL 2</div><div class="instr-lvl-name">NORMAL — Pressure</div></div>
+        <div class="instr-lvl" style="border-color:#e53935"><div class="instr-lvl-num" style="color:#e53935">LEVEL 3</div><div class="instr-lvl-name">HARD — Overload</div></div>
+      </div>
+      <div class="instr-actions">
+        <button class="gbtn gbtn-outline" onclick="goBackToSelection()">← Back</button>
+        <button class="gbtn gbtn-navy" onclick="startGame()">START GAME →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== GAME SCREEN ======== -->
+<div class="screen" id="game-screen">
+  <div class="game-topbar">
+    <div class="gtb-logo"><img src="logo.png" alt="RE:SET"></div>
+    <div class="gtb-badge" id="hud-level">LEVEL 1 — EASY</div>
+    <div class="gtb-right">
+      <div class="hud-timer">
+        <span class="hud-t-lbl">TIME</span>
+        <span class="hud-t-val" id="hud-timer">30</span>
+      </div>
+      <div class="hud-meter">
+        <span class="hud-m-lbl">OVERTHINKING</span>
+        <div class="hud-m-track"><div class="hud-m-fill" id="hud-m-fill"></div></div>
+        <span class="hud-m-pct" id="hud-m-pct">0%</span>
+      </div>
+    </div>
+  </div>
+  <div class="game-canvas-wrap">
+    <canvas id="game-canvas"></canvas>
+  </div>
+  <div class="mobile-controls">
+    <div class="dpad-row"><div class="dpad-spacer"></div><button class="dpad-btn" ontouchstart="dpadInput('N')" onmousedown="dpadInput('N')">▲</button><div class="dpad-spacer"></div></div>
+    <div class="dpad-row"><button class="dpad-btn" ontouchstart="dpadInput('W')" onmousedown="dpadInput('W')">◀</button><div class="dpad-spacer"></div><button class="dpad-btn" ontouchstart="dpadInput('E')" onmousedown="dpadInput('E')">▶</button></div>
+    <div class="dpad-row"><div class="dpad-spacer"></div><button class="dpad-btn" ontouchstart="dpadInput('S')" onmousedown="dpadInput('S')">▼</button><div class="dpad-spacer"></div></div>
+  </div>
+</div>
+
+<!-- ======== LEVEL COMPLETE ======== -->
+<div class="screen" id="level-complete-screen">
+  <div class="lc-wrap">
+    <div class="lc-head">
+      <div class="lc-check">✓</div>
+      <h2 class="lc-title" id="lc-title">LEVEL COMPLETE</h2>
+    </div>
+    <div class="lc-body">
+      <div class="lc-stats">
+        <div class="lc-stat"><div class="lc-stat-lbl">Time Remaining</div><div class="lc-stat-val" id="lc-time">—</div></div>
+        <div class="lc-stat"><div class="lc-stat-lbl">Wrong Choices</div><div class="lc-stat-val" id="lc-wrong">—</div></div>
+        <div class="lc-stat"><div class="lc-stat-lbl">Enemy Hits</div><div class="lc-stat-val" id="lc-hits">—</div></div>
+        <div class="lc-stat"><div class="lc-stat-lbl">Overthinking</div><div class="lc-stat-val" id="lc-meter">—</div></div>
+      </div>
+      <div class="lc-score-row">
+        <span class="lc-score-lbl">Focus Score</span>
+        <span class="lc-score-val" id="lc-score">—</span>
+      </div>
+      <div class="lc-actions">
+        <button class="gbtn gbtn-outline" onclick="goBackToSelection()">← Personas</button>
+        <button class="gbtn gbtn-teal" id="lc-next-btn">NEXT LEVEL →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== GAME OVER ======== -->
+<div class="screen" id="game-over-screen">
+  <div class="go-wrap">
+    <div class="go-head">
+      <div class="go-icon" id="go-icon">🌀</div>
+      <h2 class="go-title" id="go-title">YOU LOST FOCUS</h2>
+      <p class="go-sub" id="go-sub">Your overthinking took complete control.</p>
+    </div>
+    <div class="go-body">
+      <div class="go-m-lbl">OVERTHINKING METER AT FAILURE</div>
+      <div class="go-m-bar"><div class="go-m-fill" id="go-m-fill" style="width:100%"></div></div>
+      <div class="go-actions">
+        <button class="gbtn gbtn-navy" id="go-retry-btn" onclick="retryLevel()">↩ RETRY LEVEL</button>
+        <button class="gbtn gbtn-navy" id="go-restart-btn" style="display:none" onclick="restartGame()">↩ RESTART FROM BEGINNING</button>
+        <button class="gbtn gbtn-outline" id="go-back-btn" onclick="goBackToSelection()">← Back to Personas</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== FINAL SCORE ======== -->
+<div class="screen" id="final-score-screen">
+  <div class="fs-wrap">
+    <div class="fs-head">
+      <div class="fs-logo"><img src="logo.png" alt="RE:SET"></div>
+      <div class="fs-super">Overthinker Challenge</div>
+      <h2 class="fs-title" id="fs-title">CHALLENGE COMPLETE</h2>
+    </div>
+    <div class="fs-body">
+      <div class="fs-char-img"><img src="overthinker.png" alt="The Overthinker"></div>
+      <div class="fs-score-box">
+        <div class="fs-score-lbl">FOCUS SCORE</div>
+        <div class="fs-score-num" id="fs-score-num">72<span class="fs-score-out"> / 100</span></div>
+      </div>
+      <p class="fs-message" id="fs-message">You escaped the loop.</p>
+      <p class="fs-message" id="fs-quote" style="border-left-color:var(--blue);">"You don't have to control every thought. You just have to stop letting every thought control you."</p>
+      <p class="fs-message" style="border-left-color:var(--orange);font-size:.88rem;">If you can beat your overthinking in the game, you can surely beat it in real life.</p>
+      <div class="fs-breakdown">
+        <div class="fs-stat"><div class="fs-stat-val" id="fs-wrong">—</div><div class="fs-stat-lbl">Wrong Choices</div></div>
+        <div class="fs-stat"><div class="fs-stat-val" id="fs-hits">—</div><div class="fs-stat-lbl">Enemy Hits</div></div>
+        <div class="fs-stat"><div class="fs-stat-val" id="fs-think">—</div><div class="fs-stat-lbl">Peak Overthink</div></div>
+      </div>
+      <div class="fs-actions">
+        <button class="gbtn gbtn-teal" onclick="playAgain()">↺ PLAY AGAIN</button>
+        <button class="gbtn gbtn-outline" onclick="goBackToSelection()">← BACK TO PERSONAS</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==============================================
+   EXISTING RE:SET INTERFACE — PRESERVED EXACTLY
+   ============================================== */
+const charData = {
+  overthinker:   { name:'THE OVERTHINKER',   img:'overthinker.png',   desc:'Trapped in endless loops of "what if?" — this mindset over-analyses every detail, second-guesses decisions, and turns small tasks into mental marathons.', color:'#2196F3' },
+  procrastinator:{ name:'THE PROCRASTINATOR', img:'procrastinator.png', desc:'Always waiting for the "right moment" that never comes. This mindset delays, distracts, and watches deadlines fly by while scrolling through feeds.',      color:'#E87830' },
+  distracted:    { name:'THE DISTRACTED',     img:'distracted.png',     desc:"Pulled in every direction by notifications, tabs, and conversations. This mindset can't hold focus for more than a few minutes before switching tasks.",        color:'#2ECDA6' },
+  focused:       { name:'THE FOCUSED ONE',    img:'focused.png',        desc:'Locked in and laser-sharp. This mindset knows how to prioritize, block distractions, and get into deep work mode — but staying here is the real challenge.', color:'#00C853' }
+};
+let selectedChar = null;
+
+function createPixelDecor() {
+  const c = document.getElementById('pixel-decor');
+  const cols = ['#152B4A','#2ECDA6','#2196F3','#E87830','#FFCA28','#00C853'];
+  const n = window.innerWidth < 640 ? 14 : 28;
+  for (let i=0;i<n;i++) {
+    const p = document.createElement('div'); p.className='pix';
+    const s = Math.random()*6+3;
+    Object.assign(p.style,{ width:s+'px', height:s+'px', left:(Math.random()*96+2)+'%', top:(Math.random()*96+2)+'%', background:cols[Math.floor(Math.random()*cols.length)], animationDelay:(Math.random()*20)+'s', animationDuration:(Math.random()*12+16)+'s' });
+    c.appendChild(p);
+  }
+}
+createPixelDecor();
+
+function showScreen(hideId, showId, delay) {
+  const ov = document.getElementById('transition-overlay');
+  ov.classList.add('active');
+  setTimeout(() => {
+    document.getElementById(hideId).classList.remove('active','fade-in');
+    const el = document.getElementById(showId);
+    el.classList.add('active','fade-in');
+    if (showId==='coming-soon-screen') {
+      const bar = el.querySelector('.cs-progress-bar');
+      if (bar) { bar.style.animation='none'; bar.offsetHeight; bar.style.animation=''; }
+    }
+    setTimeout(()=>ov.classList.remove('active'),350);
+  }, delay||600);
+}
+
+function enterGame() { showScreen('welcome-screen','selection-screen',600); }
+
+function selectCharacter(card) {
+  const key = card.dataset.char;
+  const data = charData[key]; if (!data) return;
+  document.querySelectorAll('.char-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected'); selectedChar = key;
+  const si = document.getElementById('sel-img');
+  si.src=data.img; si.alt=data.name;
+  si.style.animation='none'; si.offsetHeight; si.style.animation='';
+  document.getElementById('sel-name').textContent = data.name;
+  document.getElementById('sel-desc').textContent = data.desc;
+  document.getElementById('selection-panel').classList.add('visible');
+  if (window.innerWidth<=768) setTimeout(()=>document.getElementById('selection-panel').scrollIntoView({behavior:'smooth',block:'center'}),180);
+}
+
+/* MODIFIED: Overthinker → game; others → coming soon */
+function startChallenge() {
+  if (!selectedChar) return;
+  if (selectedChar==='overthinker') {
+    showScreen('selection-screen','game-instructions-screen',700);
+  } else {
+    const ci = document.getElementById('cs-char-img');
+    ci.src=charData[selectedChar].img; ci.alt=charData[selectedChar].name;
+    showScreen('selection-screen','coming-soon-screen',700);
+  }
+}
+function goBack() { showScreen('coming-soon-screen','selection-screen',500); }
+
+function goBackToSelection() {
+  G.running=false;
+  if (G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}
+  if (G.raf){cancelAnimationFrame(G.raf);G.raf=null;}
+  ['game-instructions-screen','game-screen','level-complete-screen','game-over-screen','final-score-screen']
+    .forEach(id=>document.getElementById(id).classList.remove('active','fade-in'));
+  document.getElementById('welcome-screen').classList.remove('active','fade-in');
+  const ov=document.getElementById('transition-overlay'); ov.classList.add('active');
+  setTimeout(()=>{ document.getElementById('selection-screen').classList.add('active','fade-in'); setTimeout(()=>ov.classList.remove('active'),350); },450);
+}
+
+document.addEventListener('keydown', e => {
+  const gs = document.getElementById('game-screen');
+  const ws = document.getElementById('welcome-screen');
+  const ss = document.getElementById('selection-screen');
+  const cs = document.getElementById('coming-soon-screen');
+  if (ws.classList.contains('active')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();enterGame();return;}
+  if (ss.classList.contains('active')){
+    const cards=Array.from(document.querySelectorAll('.char-card'));
+    if(e.key>='1'&&e.key<='4'){const i=parseInt(e.key)-1;if(cards[i])selectCharacter(cards[i]);}
+    if(e.key==='Enter'&&selectedChar)startChallenge();
+  }
+  if(cs.classList.contains('active')&&e.key==='Escape')goBack();
+  if(gs.classList.contains('active')&&G.running){
+    const m={ArrowUp:'N',ArrowDown:'S',ArrowLeft:'W',ArrowRight:'E',w:'N',s:'S',a:'W',d:'E',W:'N',S:'S',A:'W',D:'E'};
+    if(m[e.key]){e.preventDefault();queueMove(m[e.key]);}
+  }
+});
+
+/* ==============================================
+   GAME ENGINE — ESCAPE THE LOOP
+   ============================================== */
+const LEVELS=[
+  {rows:9, cols:9, label:'LEVEL 1 — EASY',   time:60, enemies:3,traps:4,falseExits:2,wrongObjs:3,speed:1.1,loopPct:.22},
+  {rows:13,cols:13,label:'LEVEL 2 — NORMAL', time:45, enemies:5,traps:7,falseExits:3,wrongObjs:4,speed:.85,loopPct:.26},
+  {rows:15,cols:15,label:'LEVEL 3 — HARD',   time:30, enemies:7,traps:10,falseExits:4,wrongObjs:5,speed:.55,loopPct:.30}
+];
+const MSGS=[
+  {min:80,msg:'"YOU DID A GREAT JOB! You don\'t have to control every thought. You just have to stop letting every thought control you."'},
+  {min:60,msg:'"If you can beat your overthinking in the game, you can surely beat it in real life. Trust your instincts."'},
+  {min:40,msg:'"The maze tested you. Every hesitation was a lesson — trust your first instinct. Overthinking costs more than a wrong turn."'},
+  {min:0, msg:'"You escaped the loop. That\'s the first step. You don\'t have to control every thought — just stop letting every thought control you."'}
+];
+
+const G={
+  level:1,cells:null,rows:0,cols:0,cSize:0,
+  player:{r:0,c:0,tr:0,tc:0,t:1,moving:false,cooldown:0},
+  enemies:[],traps:new Set(),falseExits:new Set(),wrongObjs:new Set(),exitCell:null,
+  timer:60,overThink:0,wrongChoices:0,enemyHits:0,
+  visitedCells:new Set(),repeatedCells:0,
+  running:false,raf:null,lastTS:0,timerInterval:null,
+  levelStats:[],pendingDir:null,
+  toastTO:null,flashTO:null,playerImg:null,
+  failCount:0  // track failures per level: 0 = first attempt, 1 = retry used
+};
+
+// Preload player image
+const _pImg=new Image(); _pImg.src='overthinker.png'; G.playerImg=_pImg;
+
+/* ---- Maze helpers ---- */
+const DIRS={N:[-1,0],S:[1,0],E:[0,1],W:[0,-1]};
+const OPP={N:'S',S:'N',E:'W',W:'E'};
+function inB(r,c,R,C){return r>=0&&r<R&&c>=0&&c<C;}
+function rShuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function ck(r,c){return r*1000+c;}
+
+function buildGrid(R,C){
+  return Array.from({length:R},(_,r)=>Array.from({length:C},(_,c)=>({r,c,walls:{N:1,S:1,E:1,W:1},vis:false})));
+}
+function carveDFS(g,r,c,R,C){
+  g[r][c].vis=true;
+  for(const d of rShuffle(['N','S','E','W'])){
+    const[dr,dc]=DIRS[d],nr=r+dr,nc=c+dc;
+    if(inB(nr,nc,R,C)&&!g[nr][nc].vis){g[r][c].walls[d]=0;g[nr][nc].walls[OPP[d]]=0;carveDFS(g,nr,nc,R,C);}
+  }
+}
+function addLoops(g,R,C,pct){
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(Math.random()<pct)
+    for(const d of rShuffle(['S','E'])){
+      const[dr,dc]=DIRS[d],nr=r+dr,nc=c+dc;
+      if(inB(nr,nc,R,C)&&g[r][c].walls[d]){g[r][c].walls[d]=0;g[nr][nc].walls[OPP[d]]=0;break;}
+    }
+}
+function genMaze(R,C,pct){const g=buildGrid(R,C);carveDFS(g,0,0,R,C);addLoops(g,R,C,pct);return g;}
+
+function buildPatrol(g,sr,sc,R,C,len){
+  const path=[{r:sr,c:sc}];let r=sr,c=sc;
+  for(let i=0;i<len-1;i++){
+    const open=rShuffle(['N','S','E','W']).filter(d=>{const[dr,dc]=DIRS[d],nr=r+dr,nc=c+dc;return inB(nr,nc,R,C)&&!g[r][c].walls[d];});
+    if(!open.length)break;
+    const[dr,dc]=DIRS[open[0]];r+=dr;c+=dc;
+    if((r===0&&c===0)||(r===R-1&&c===C-1))break;
+    path.push({r,c});
+  }
+  return path;
+}
+
+/* ---- HUD ---- */
+function updTimer(){
+  const el=document.getElementById('hud-timer'); if(!el)return;
+  el.textContent=Math.max(0,Math.ceil(G.timer));
+  el.classList.toggle('danger',G.timer<=8);
+}
+function updMeter(){
+  const f=document.getElementById('hud-m-fill'),p=document.getElementById('hud-m-pct'); if(!f||!p)return;
+  const v=Math.round(G.overThink); f.style.width=v+'%';
+  f.className='hud-m-fill'+(v>=75?' crit':v>=45?' warn':'');
+  p.textContent=v+'%';
+}
+
+/* ---- Toast & Flash ---- */
+function toast(msg,type=''){
+  const el=document.getElementById('penalty-toast'); if(!el)return;
+  el.textContent=msg; el.className='show'+(type?' '+type:'');
+  if(G.toastTO)clearTimeout(G.toastTO);
+  G.toastTO=setTimeout(()=>el.className='',1800);
+}
+function flash(color){
+  const el=document.getElementById('game-flash'); if(!el)return;
+  el.style.background=color; el.classList.add('show');
+  if(G.flashTO)clearTimeout(G.flashTO);
+  G.flashTO=setTimeout(()=>el.classList.remove('show'),200);
+}
+
+/* ---- Penalties ---- */
+function addOT(amount,msg,type){
+  G.overThink=Math.min(100,G.overThink+amount); updMeter();
+  if(msg)toast(msg,type||'warn');
+  if(G.overThink>=100)endGame('focus');
+}
+function timePenalty(s){
+  G.timer=Math.max(0,G.timer-s); updTimer();
+  if(G.timer<=0)endGame('time');
+}
+
+/* ---- BFS to find shortest path (used to protect critical route) ---- */
+function bfs(startR,startC,endR,endC,R,C,cells,blocked){
+  const q=[{r:startR,c:startC,path:[ck(startR,startC)]}];
+  const visited=new Set([ck(startR,startC)]);
+  if(blocked) blocked.forEach(k=>visited.add(k));
+  while(q.length){
+    const{r,c,path}=q.shift();
+    if(r===endR&&c===endC) return path;
+    for(const d of ['N','S','E','W']){
+      if(cells[r][c].walls[d]) continue;
+      const[dr,dc]=DIRS[d],nr=r+dr,nc=c+dc;
+      const nk=ck(nr,nc);
+      if(inB(nr,nc,R,C)&&!visited.has(nk)){
+        visited.add(nk);
+        q.push({r:nr,c:nc,path:[...path,nk]});
+      }
+    }
+  }
+  return null; // no path
+}
+
+/* ---- Level Init ---- */
+function initLevel(lvl){
+  const cfg=LEVELS[lvl-1];
+  G.level=lvl; G.rows=cfg.rows; G.cols=cfg.cols;
+  G.timer=cfg.time; G.overThink=0; G.wrongChoices=0; G.enemyHits=0;
+  G.visitedCells=new Set(); G.repeatedCells=0;
+  G.enemies=[]; G.traps=new Set(); G.falseExits=new Set(); G.wrongObjs=new Set();
+  G.pendingDir=null; G.running=false;
+  G.player={r:0,c:0,tr:0,tc:0,t:1,moving:false,cooldown:0};
+
+  G.cells=genMaze(cfg.rows,cfg.cols,cfg.loopPct);
+  G.exitCell={r:cfg.rows-1,c:cfg.cols-1};
+
+  // Find the critical shortest path — do NOT place hazards on it
+  const critPath=bfs(0,0,cfg.rows-1,cfg.cols-1,cfg.rows,cfg.cols,G.cells,null);
+  const critSet=new Set(critPath||[]);
+
+  // Collect safe placement cells (not on critical path, not start, not exit)
+  const free=[];
+  for(let r=0;r<cfg.rows;r++)for(let c=0;c<cfg.cols;c++){
+    const k=ck(r,c);
+    if(critSet.has(k)) continue;
+    if(r===0&&c===0) continue;
+    if(r===cfg.rows-1&&c===cfg.cols-1) continue;
+    free.push({r,c});
+  }
+  rShuffle(free);
+
+  // False exits — prefer boundary cells not on critical path
+  const bdry=free.filter(({r,c})=>r===0||r===cfg.rows-1||c===0||c===cfg.cols-1);
+  rShuffle(bdry);
+  for(let i=0;i<Math.min(cfg.falseExits,bdry.length);i++)G.falseExits.add(ck(bdry[i].r,bdry[i].c));
+
+  // Traps + wrong objects — only on non-critical, non-false-exit cells
+  const inner=free.filter(({r,c})=>!G.falseExits.has(ck(r,c)));
+  rShuffle(inner);
+  let fi=0;
+  for(let i=0;i<Math.min(cfg.traps,inner.length-fi);i++){G.traps.add(ck(inner[fi].r,inner[fi].c));fi++;}
+  for(let i=0;i<Math.min(cfg.wrongObjs,inner.length-fi);i++){G.wrongObjs.add(ck(inner[fi].r,inner[fi].c));fi++;}
+
+  // Enemies — placed on non-critical cells, with longer patrol routes
+  const eStarts=inner.slice(fi).filter(({r,c})=>!G.traps.has(ck(r,c))&&!G.wrongObjs.has(ck(r,c)));
+  rShuffle(eStarts);
+  const pLen=[5,8,12][lvl-1];
+  for(let i=0;i<Math.min(cfg.enemies,eStarts.length);i++){
+    const{r:er,c:ec}=eStarts[i];
+    const path=buildPatrol(G.cells,er,ec,cfg.rows,cfg.cols,pLen);
+    if(path.length<2)continue;
+    // Ensure patrol doesn't sit permanently on the only path — patrol cells are off critical
+    G.enemies.push({path,pi:0,dir:1,r:path[0].r,c:path[0].c,tr:path[1].r,tc:path[1].c,t:0,speed:cfg.speed,hitCD:0});
+  }
+
+  // Verify the maze is still solvable even with all hazards
+  const allBlocked=new Set();
+  G.traps.forEach(k=>allBlocked.add(k));
+  G.falseExits.forEach(k=>allBlocked.add(k));
+  G.wrongObjs.forEach(k=>allBlocked.add(k));
+  // The path should still exist even avoiding all hazards (since they're off critical path)
+
+  document.getElementById('hud-level').textContent=cfg.label;
+  updTimer(); updMeter();
+  G.visitedCells.add(ck(0,0));
+  resizeCv();
+}
+
+function resizeCv(){
+  const wrap=document.querySelector('.game-canvas-wrap');
+  const cv=document.getElementById('game-canvas'); if(!wrap||!cv)return;
+  const maxW=wrap.clientWidth-28, maxH=window.innerHeight*.67;
+  const sz=Math.floor(Math.min(maxW,maxH));
+  G.cSize=Math.floor(sz/Math.max(G.cols,1));
+  cv.width=G.cSize*G.cols; cv.height=G.cSize*G.rows;
+}
+window.addEventListener('resize',()=>{if(document.getElementById('game-screen').classList.contains('active'))resizeCv();});
+
+/* ---- Movement ---- */
+function queueMove(dir){G.pendingDir=dir;}
+function dpadInput(dir){queueMove(dir);}
+
+function tryMove(dir){
+  const{r,c}=G.player;
+  if(G.cells[r][c].walls[dir])return false;
+  const[dr,dc]=DIRS[dir],nr=r+dr,nc=c+dc;
+  if(!inB(nr,nc,G.rows,G.cols))return false;
+  G.player.tr=nr;G.player.tc=nc;G.player.t=0;G.player.moving=true;
+  return true;
+}
+
+function completeMove(){
+  G.player.r=G.player.tr;G.player.c=G.player.tc;G.player.moving=false;
+  const k=ck(G.player.r,G.player.c);
+  if(G.visitedCells.has(k)){G.repeatedCells++;if(G.repeatedCells%3===0)addOT(8,'⟳ LOOP DETECTED +8%');}
+  G.visitedCells.add(k);
+  if(G.traps.has(k)){G.wrongChoices++;addOT(15,'⚠ TRAP! +15%  −3s','danger');timePenalty(3);flash('rgba(232,120,48,.22)');G.traps.delete(k);return;}
+  if(G.wrongObjs.has(k)){G.wrongChoices++;addOT(12,'✗ WRONG OBJECT +12%','warn');G.wrongObjs.delete(k);flash('rgba(255,202,40,.28)');return;}
+  if(G.falseExits.has(k)){G.wrongChoices++;addOT(20,'✗ FALSE EXIT +20%  −5s','danger');timePenalty(5);flash('rgba(229,57,53,.2)');return;}
+  if(G.player.r===G.exitCell.r&&G.player.c===G.exitCell.c)levelWon();
+}
+
+/* ---- Enemies ---- */
+function updEnemies(dt){
+  for(const en of G.enemies){
+    if(en.hitCD>0)en.hitCD-=dt;
+    en.t+=dt*en.speed;
+    if(en.t>=1){
+      en.t=1;en.r=en.tr;en.c=en.tc;
+      let np=en.pi+en.dir;
+      if(np<0||np>=en.path.length){en.dir*=-1;np=en.pi+en.dir;}
+      if(np>=0&&np<en.path.length){en.pi=np;en.tr=en.path[np].r;en.tc=en.path[np].c;en.t=0;}
+    }
+    if(en.hitCD<=0){
+      const er=en.r+(en.tr-en.r)*en.t,ec=en.c+(en.tc-en.c)*en.t;
+      const pr=G.player.r+(G.player.tr-G.player.r)*G.player.t,pc=G.player.c+(G.player.tc-G.player.c)*G.player.t;
+      if(Math.sqrt((er-pr)**2+(ec-pc)**2)<.68){
+        G.enemyHits++;en.hitCD=1.5;G.player.cooldown=.45;
+        addOT(18,'⚡ ENEMY HIT +18%','danger');timePenalty(2);flash('rgba(229,57,53,.28)');
+      }
+    }
+  }
+}
+
+/* ---- Timer ---- */
+function startTimer(){
+  if(G.timerInterval)clearInterval(G.timerInterval);
+  G.timerInterval=setInterval(()=>{
+    if(!G.running)return;
+    G.timer-=.5; updTimer();
+    if(G.timer<=0){clearInterval(G.timerInterval);G.timerInterval=null;endGame('time');}
+  },500);
+}
+
+/* ---- Game Loop ---- */
+function startLoop(){
+  G.running=true;G.lastTS=0;
+  if(G.raf)cancelAnimationFrame(G.raf);
+  G.raf=requestAnimationFrame(gameLoop);
+}
+function gameLoop(ts){
+  if(!G.running)return;
+  const dt=G.lastTS?Math.min((ts-G.lastTS)/1000,.1):0;
+  G.lastTS=ts;
+  if(G.player.moving){
+    G.player.t+=dt*9;
+    if(G.player.t>=1){G.player.t=1;completeMove();}
+  } else if(G.pendingDir&&G.player.cooldown<=0){
+    tryMove(G.pendingDir);G.pendingDir=null;
+  }
+  if(G.player.cooldown>0)G.player.cooldown-=dt;
+  updEnemies(dt);
+  drawGame();
+  G.raf=requestAnimationFrame(gameLoop);
+}
+
+/* ---- Draw ---- */
+function drawGame(){
+  const cv=document.getElementById('game-canvas'); if(!cv)return;
+  const ctx=cv.getContext('2d'),cs=G.cSize;
+  ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);
+
+  // Visited tint
+  ctx.fillStyle='rgba(46,205,166,.04)';
+  G.visitedCells.forEach(k=>{const r=Math.floor(k/1000),c=k%1000;if(r<G.rows&&c<G.cols)ctx.fillRect(c*cs+1,r*cs+1,cs-2,cs-2);});
+
+  // Traps
+  G.traps.forEach(k=>{
+    const r=Math.floor(k/1000),c=k%1000,x=c*cs,y=r*cs;
+    ctx.fillStyle='rgba(232,120,48,.15)';ctx.fillRect(x+2,y+2,cs-4,cs-4);
+    ctx.strokeStyle='rgba(232,120,48,.65)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(x+cs*.25,y+cs*.25);ctx.lineTo(x+cs*.75,y+cs*.75);
+    ctx.moveTo(x+cs*.75,y+cs*.25);ctx.lineTo(x+cs*.25,y+cs*.75);ctx.stroke();
+  });
+
+  // Wrong objects
+  G.wrongObjs.forEach(k=>{
+    const r=Math.floor(k/1000),c=k%1000;
+    const bx=c*cs+cs*.33,by=r*cs+cs*.33,bs=cs*.34;
+    ctx.fillStyle='rgba(255,202,40,.75)';ctx.fillRect(bx,by,bs,bs);
+    ctx.strokeStyle='#152B4A';ctx.lineWidth=1.5;ctx.strokeRect(bx,by,bs,bs);
+    ctx.fillStyle='#152B4A';
+    ctx.font=`bold ${Math.floor(cs*.22)}px Space Grotesk,sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('?',c*cs+cs*.5,r*cs+cs*.5);
+  });
+
+  // False exits
+  G.falseExits.forEach(k=>{
+    const r=Math.floor(k/1000),c=k%1000;
+    ctx.fillStyle='rgba(232,120,48,.12)';ctx.fillRect(c*cs+3,r*cs+3,cs-6,cs-6);
+    ctx.strokeStyle='rgba(232,120,48,.55)';ctx.lineWidth=2;ctx.setLineDash([3,3]);
+    ctx.strokeRect(c*cs+4,r*cs+4,cs-8,cs-8);ctx.setLineDash([]);
+    ctx.fillStyle='rgba(232,120,48,.7)';
+    ctx.font=`bold ${Math.floor(cs*.17)}px Space Grotesk,sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('EXIT?',c*cs+cs*.5,r*cs+cs*.5);
+  });
+
+  // Real exit
+  if(G.exitCell){
+    const{r,c}=G.exitCell;
+    ctx.fillStyle='rgba(46,205,166,.18)';ctx.fillRect(c*cs+2,r*cs+2,cs-4,cs-4);
+    ctx.strokeStyle='#2ECDA6';ctx.lineWidth=3;ctx.strokeRect(c*cs+3,r*cs+3,cs-6,cs-6);
+    ctx.fillStyle='#2ECDA6';
+    ctx.font=`bold ${Math.floor(cs*.19)}px Space Grotesk,sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('EXIT',c*cs+cs*.5,r*cs+cs*.5);
+  }
+
+  // Start marker
+  ctx.fillStyle='rgba(33,150,243,.07)';ctx.fillRect(2,2,cs-4,cs-4);
+
+  // Walls
+  ctx.strokeStyle='#152B4A';ctx.lineWidth=2.5;ctx.lineCap='square';
+  for(let r=0;r<G.rows;r++)for(let c=0;c<G.cols;c++){
+    const w=G.cells[r][c].walls,x=c*cs,y=r*cs;
+    ctx.beginPath();
+    if(w.N){ctx.moveTo(x,y);ctx.lineTo(x+cs,y);}
+    if(w.S){ctx.moveTo(x,y+cs);ctx.lineTo(x+cs,y+cs);}
+    if(w.E){ctx.moveTo(x+cs,y);ctx.lineTo(x+cs,y+cs);}
+    if(w.W){ctx.moveTo(x,y);ctx.lineTo(x,y+cs);}
+    ctx.stroke();
+  }
+  ctx.strokeStyle='#152B4A';ctx.lineWidth=3;ctx.strokeRect(0,0,cv.width,cv.height);
+
+  // Enemies
+  const now=performance.now()/1000;
+  for(const en of G.enemies){
+    const er=en.r+(en.tr-en.r)*en.t,ec=en.c+(en.tc-en.c)*en.t;
+    const ex=ec*cs,ey=er*cs,es=cs*.54,eo=(cs-es)/2;
+    const pulse=.6+.4*Math.sin(now*3.5+en.pi);
+    ctx.shadowColor='rgba(229,57,53,.4)';ctx.shadowBlur=7*pulse;
+    ctx.fillStyle='#1a1a2e';ctx.fillRect(ex+eo,ey+eo,es,es);
+    ctx.shadowBlur=0;
+    ctx.fillStyle=`rgba(229,57,53,${.7+.3*pulse})`;
+    const es2=es*.14,ey2=ey+eo+es*.3;
+    ctx.fillRect(ex+eo+es*.22,ey2,es2,es2);
+    ctx.fillRect(ex+eo+es*.64,ey2,es2,es2);
+  }
+
+  // Player
+  const pr=G.player.r+(G.player.tr-G.player.r)*G.player.t;
+  const pc=G.player.c+(G.player.tc-G.player.c)*G.player.t;
+  const ps=cs*.9,po=(cs-ps)/2;
+  const px=pc*cs+po,py=pr*cs+po;
+  ctx.strokeStyle='rgba(33,150,243,.4)';ctx.lineWidth=2;
+  ctx.strokeRect(pc*cs+2,pr*cs+2,cs-4,cs-4);
+  if(G.playerImg&&G.playerImg.complete&&G.playerImg.naturalWidth>0){
+    ctx.drawImage(G.playerImg,px,py,ps,ps);
+  } else {
+    ctx.fillStyle='#2196F3';ctx.fillRect(px,py,ps,ps);
+  }
+}
+
+/* ---- Level Won ---- */
+function levelWon(){
+  G.running=false;
+  if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}
+  if(G.raf){cancelAnimationFrame(G.raf);G.raf=null;}
+  const score=calcScore();
+  G.levelStats.push({time:G.timer,wrongChoices:G.wrongChoices,enemyHits:G.enemyHits,overThink:G.overThink,score});
+  document.getElementById('lc-title').textContent=G.level<3?`LEVEL ${G.level} COMPLETE`:'CHALLENGE COMPLETE!';
+  document.getElementById('lc-time').textContent=Math.ceil(G.timer)+'s';
+  document.getElementById('lc-wrong').textContent=G.wrongChoices;
+  document.getElementById('lc-hits').textContent=G.enemyHits;
+  document.getElementById('lc-meter').textContent=Math.round(G.overThink)+'%';
+  document.getElementById('lc-score').textContent=score+' / 100';
+  const btn=document.getElementById('lc-next-btn');
+  if(G.level>=3){btn.textContent='VIEW RESULTS →';btn.onclick=showFinalScore;}
+  else{btn.textContent='NEXT LEVEL →';btn.onclick=nextLevel;}
+  showScreen('game-screen','level-complete-screen',400);
+}
+
+/* ---- Game Over ---- */
+function endGame(reason){
+  G.running=false;
+  if(G.timerInterval){clearInterval(G.timerInterval);G.timerInterval=null;}
+  if(G.raf){cancelAnimationFrame(G.raf);G.raf=null;}
+
+  G.failCount++;
+  const isTime=reason==='time';
+  const canRetry = G.failCount < 2; // Only 1 retry per level
+
+  document.getElementById('go-icon').textContent=isTime?'⏱':'🌀';
+
+  if(canRetry){
+    document.getElementById('go-title').textContent=isTime?'TIME RAN OUT':'YOU LOST FOCUS';
+    document.getElementById('go-sub').textContent=isTime
+      ?'The maze consumed your every second. You have one more chance.'
+      :'Your overthinking filled the meter. You have one more chance.';
+  } else {
+    document.getElementById('go-title').textContent='YOU FAILED. TRY AGAIN.';
+    document.getElementById('go-sub').textContent='You used your retry. The game will restart from the beginning.';
+  }
+
+  document.getElementById('go-m-fill').style.width=Math.round(G.overThink)+'%';
+
+  // Update button visibility
+  const retryBtn=document.getElementById('go-retry-btn');
+  const restartBtn=document.getElementById('go-restart-btn');
+  const backBtn=document.getElementById('go-back-btn');
+
+  if(canRetry){
+    retryBtn.style.display='inline-flex';
+    restartBtn.style.display='none';
+  } else {
+    retryBtn.style.display='none';
+    restartBtn.style.display='inline-flex';
+  }
+
+  showScreen('game-screen','game-over-screen',400);
+}
+
+function calcScore(){
+  let s=100;
+  s-=G.wrongChoices*4; s-=G.enemyHits*5;
+  s-=G.repeatedCells*1.5; s-=Math.floor(G.overThink*.2);
+  const cfg=LEVELS[G.level-1];
+  s+=Math.floor((G.timer/cfg.time)*15); // bonus for remaining time proportional to max
+  return Math.max(0,Math.min(100,Math.round(s)));
+}
+
+function nextLevel(){
+  const n=G.level+1;
+  G.failCount=0; // reset fail counter for new level
+  showScreen('level-complete-screen','game-screen',500);
+  setTimeout(()=>{initLevel(n);startTimer();startLoop();},620);
+}
+function retryLevel(){
+  showScreen('game-over-screen','game-screen',500);
+  setTimeout(()=>{initLevel(G.level);startTimer();startLoop();},620);
+}
+function restartGame(){
+  G.levelStats=[];
+  G.failCount=0;
+  showScreen('game-over-screen','game-instructions-screen',500);
+}
+
+function showFinalScore(){
+  const total=G.levelStats.reduce((a,s)=>a+s.score,0);
+  const avg=Math.round(total/G.levelStats.length);
+  const tWrong=G.levelStats.reduce((a,s)=>a+s.wrongChoices,0);
+  const tHits=G.levelStats.reduce((a,s)=>a+s.enemyHits,0);
+  const peak=Math.round(Math.max(...G.levelStats.map(s=>s.overThink)));
+  document.getElementById('fs-score-num').innerHTML=avg+'<span class="fs-score-out"> / 100</span>';
+  document.getElementById('fs-wrong').textContent=tWrong;
+  document.getElementById('fs-hits').textContent=tHits;
+  document.getElementById('fs-think').textContent=peak+'%';
+
+  // Main motivational message based on score
+  const msgObj=(MSGS.find(m=>avg>=m.min)||MSGS[3]);
+  document.getElementById('fs-message').textContent=msgObj.msg;
+
+  // Set the final title and quote
+  document.getElementById('fs-title').textContent=avg>=70?'YOU DID A GREAT JOB!':'CHALLENGE COMPLETE';
+  document.getElementById('fs-quote').textContent = avg >= 70 ? "You trusted yourself, stayed focused, and found your way out." : "Not every wrong turn is a failure. Pause, refocus, and find your way forward.";
+
+  showScreen('level-complete-screen','final-score-screen',400);
+}
+
+function startGame(){
+  G.levelStats=[];
+  G.failCount=0;
+  showScreen('game-instructions-screen','game-screen',600);
+  setTimeout(()=>{initLevel(1);startTimer();startLoop();},720);
+}
+function playAgain(){
+  G.levelStats=[];
+  G.failCount=0;
+  showScreen('final-score-screen','game-screen',500);
+  setTimeout(()=>{initLevel(1);startTimer();startLoop();},620);
+}
+</script>
+</body>
+</html>
